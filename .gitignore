@@ -32,3 +32,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Custom
+hygdata_v3.csv
