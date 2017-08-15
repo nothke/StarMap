@@ -6,10 +6,11 @@ using System.IO;
 
 public class Starmap : MonoBehaviour
 {
+    public float magnitudeLimit = 7;
 
-    string fileName = "hygdata_v3.csv";
+    public Material material;
 
-    int numToRead = 10000;
+    const string DATABASE_FILENAME = "hygdata_v3.csv";
 
     public struct Star
     {
@@ -23,13 +24,11 @@ public class Starmap : MonoBehaviour
 
     List<string> pickedLines = new List<string>();
 
-    const float MAGNITUDE_LIMIT = 7;
-
     void Start()
     {
         float t = Time.realtimeSinceStartup;
 
-        string[] lines = File.ReadAllLines(fileName);
+        string[] lines = File.ReadAllLines(DATABASE_FILENAME);
 
         Debug.Log("Read lines in: " + (Time.realtimeSinceStartup - t));
 
@@ -41,7 +40,7 @@ public class Starmap : MonoBehaviour
             float mag = float.Parse(magStr);
             if (i == 50) Debug.Log(mag);
 
-            if (mag < MAGNITUDE_LIMIT)
+            if (mag < magnitudeLimit)
                 pickedLines.Add(lines[i]);
         }
 
@@ -71,14 +70,13 @@ public class Starmap : MonoBehaviour
         }
 
         GenerateStarsAsGeometryMesh();
-        //GenerateStarsAsPrefabs();
     }
 
-    void GenerateStarsAsPrefabs()
+    void GenerateStarsAsPrefabs(GameObject prefab)
     {
         for (int i = 0; i < stars.Length; i++)
         {
-            GameObject starGO = Instantiate(starPrefab);
+            GameObject starGO = Instantiate(prefab);
             starGO.transform.position = stars[i].position.normalized * 100;
             starGO.transform.forward = stars[i].position.normalized;
             starGO.transform.localScale = Vector3.one * GetScaleFromMagnitude(stars[i].magnitude);
@@ -92,7 +90,6 @@ public class Starmap : MonoBehaviour
         Vector3[] vertices = new Vector3[stars.Length];
         Color[] colors = new Color[stars.Length];
 
-        int triLength = stars.Length + (3 - stars.Length % 3);
         int[] triangles = new int[stars.Length * 3];
 
         for (int i = 0; i < stars.Length; i++)
@@ -196,8 +193,4 @@ public class Starmap : MonoBehaviour
         return new Color(r / 255, g / 255, b / 255);
     }
 
-
-
-    public GameObject starPrefab;
-    public Material material;
 }

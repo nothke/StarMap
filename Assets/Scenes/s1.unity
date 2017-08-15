@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fd38a3d2db436488b4d3430bdf3c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starPrefab: {fileID: 1136319223531290, guid: 600d2a964f5f2f341a6d1c5225e925be, type: 2}
+  magnitudeLimit: 7
   material: {fileID: 2100000, guid: 7f34dad3e25a6d946b47723a6c2862ce, type: 2}
 --- !u!4 &1793583028
 Transform:
