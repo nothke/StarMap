@@ -118,7 +118,7 @@ Shader "Geometry/Billboard Facing Color"
 				// Fragment Shader -----------------------------------------------
 				float4 FS_Main(FS_INPUT input) : COLOR
 				{
-					return _SpriteTex.Sample(sampler_SpriteTex, input.tex0);
+					return _SpriteTex.Sample(sampler_SpriteTex, input.tex0) * input.col * 2;
 				}
 
 			ENDCG
