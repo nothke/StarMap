@@ -6,6 +6,7 @@ public class StarmapGSRenderer : MonoBehaviour
     public Material material;
 
     public float offset = 100;
+    public bool cullBelowHorizon = false;
 
     Star[] stars;
 
@@ -38,6 +39,10 @@ public class StarmapGSRenderer : MonoBehaviour
 
         for (int i = 0; i < stars.Length; i++)
         {
+            /*if (cullBelowHorizon &&
+                transform.TransformDirection(stars[i].position).y < 0)
+                continue;*/
+
             vertices[i] = stars[i].position.normalized * offset;
 
             colors[i] = Starmap.GetColorFromColorIndex(stars[i].colorIndex);

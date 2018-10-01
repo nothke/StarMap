@@ -4,12 +4,13 @@ public class StarmapMeshRenderer : MonoBehaviour
 {
     public StarData starData;
     public Material material;
-    
+
     public float distance = 100;
     public AnimationCurve sizeByMagnitudeCurve = new AnimationCurve(
         new Keyframe(0, 4f),
         new Keyframe(7, 1f));
     public bool magnitudeAffectsAlpha = true;
+    public bool cullBelowHorizon = false;
 
     Star[] stars;
 
@@ -51,6 +52,10 @@ public class StarmapMeshRenderer : MonoBehaviour
         {
             Vector3 v = stars[i].position.normalized * distance;
             Vector3 dir = stars[i].position.normalized;
+
+            /*if (cullBelowHorizon &&
+                transform.TransformDirection(dir).y < 0)
+                continue;*/
 
             Vector3 up = Vector3.ProjectOnPlane(Vector3.up, dir).normalized;
             Vector3 rt = Vector3.Cross(up, dir);
