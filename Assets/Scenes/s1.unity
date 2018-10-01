@@ -122,7 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1111548733}
   - component: {fileID: 1111548732}
-  - component: {fileID: 1111548731}
   - component: {fileID: 1111548730}
   - component: {fileID: 1111548729}
   m_Layer: 0
@@ -140,13 +139,6 @@ AudioListener:
   m_GameObject: {fileID: 1111548728}
   m_Enabled: 1
 --- !u!124 &1111548730
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1111548728}
-  m_Enabled: 1
---- !u!92 &1111548731
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -211,6 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1507327066}
   - component: {fileID: 1507327068}
+  - component: {fileID: 1507327065}
   m_Layer: 0
   m_Name: StarMap
   m_TagString: Untagged
@@ -218,6 +211,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1507327065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1507327064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66d362ac302e6c409c1ccb4bf7785f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starData: {fileID: 11400000, guid: 97382b912fcf831449b5f3dbbc8a7725, type: 2}
+  material: {fileID: 2100000, guid: 7f34dad3e25a6d946b47723a6c2862ce, type: 2}
+  distance: 100
+  cullBelowHorizon: 0
 --- !u!4 &1507327066
 Transform:
   m_ObjectHideFlags: 0
@@ -237,14 +245,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507327064}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00398872f215a9c419c3d9c6bca16b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   starData: {fileID: 11400000, guid: 97382b912fcf831449b5f3dbbc8a7725, type: 2}
   material: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  distance: 100
+  distance: 500
   sizeByMagnitudeCurve:
     serializedVersion: 2
     m_Curve:

@@ -7,7 +7,7 @@ namespace StarMap
         public StarData starData;
         public Material material;
 
-        public float offset = 100;
+        public float distance = 100;
         public bool cullBelowHorizon = false;
 
         Star[] stars;
@@ -45,7 +45,7 @@ namespace StarMap
                     transform.TransformDirection(stars[i].position).y < 0)
                     continue;*/
 
-                vertices[i] = stars[i].position.normalized * offset;
+                vertices[i] = stars[i].position.normalized * distance;
 
                 colors[i] = Starmap.GetColorFromColorIndex(stars[i].colorIndex);
                 colors[i].a = Starmap.GetScaleFromMagnitude(stars[i].magnitude);
