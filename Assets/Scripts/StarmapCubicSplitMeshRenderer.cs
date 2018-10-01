@@ -12,9 +12,9 @@ public class StarmapCubicSplitMeshRenderer : MonoBehaviour
         new Keyframe(7, 1f));
     public bool magnitudeAffectsAlpha = true;
     public bool cullBelowHorizon = false;
-
-    Star[] stars;
-    List<Star> starsList;
+    public bool useCubicSplitting = true;
+    [Range(0, 1)]
+    public float cullBelowHorizonOffset = 0.05f;
 
     void Start()
     {
@@ -26,25 +26,45 @@ public class StarmapCubicSplitMeshRenderer : MonoBehaviour
             return;
         }
 
-        stars = starData.stars;
+        Star[] stars = starData.stars;
+
+        // WET: This is to skip making a list
+        if (!cullBelowHorizon && !useCubicSplitting)
+        {
+            Mesh m = GenerateStarsAsStaticQuadsMesh(stars);
+            gameObject.AddComponent<MeshFilter>().sharedMesh = m;
+            gameObject.AddComponent<MeshRenderer>().material = material;
+            return;
+        }
+
+        List<Star> starsList;
 
         if (cullBelowHorizon)
             starsList = CullBelowHorizon();
         else
             starsList = new List<Star>(stars);
 
-        var cubicSplitStars = CubicSplit2(starsList);
-
-        foreach (var cs in cubicSplitStars)
+        if (useCubicSplitting)
         {
-            if (cs.Count == 0) continue;
+            var cubicSplitStars = CubicSplit2(starsList);
 
-            Mesh m = GenerateStarsAsStaticQuadsMesh(cs.ToArray());
+            foreach (var cs in cubicSplitStars)
+            {
+                if (cs.Count == 0) continue;
 
-            GameObject go = new GameObject("Stars");
-            go.AddComponent<MeshFilter>().sharedMesh = m;
-            go.AddComponent<MeshRenderer>().material = material;
-            go.transform.SetParent(gameObject.transform, false);
+                Mesh m = GenerateStarsAsStaticQuadsMesh(cs.ToArray());
+
+                GameObject go = new GameObject("Stars");
+                go.AddComponent<MeshFilter>().sharedMesh = m;
+                go.AddComponent<MeshRenderer>().material = material;
+                go.transform.SetParent(gameObject.transform, false);
+            }
+        }
+        else
+        {
+            Mesh m = GenerateStarsAsStaticQuadsMesh(starsList.ToArray());
+            gameObject.AddComponent<MeshFilter>().sharedMesh = m;
+            gameObject.AddComponent<MeshRenderer>().material = material;
         }
     }
 
