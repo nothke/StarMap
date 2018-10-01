@@ -27,6 +27,8 @@ public class StarDataEditor : Editor
         {
             string count = data.stars.Length.ToString();
             EditorGUILayout.LabelField("Stars loaded: " + count);
+
+            EditorUtility.SetDirty(data);
         }
     }
 }

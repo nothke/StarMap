@@ -14,6 +14,7 @@ public struct Star
 [CreateAssetMenu(menuName = "StarData")]
 public class StarData : ScriptableObject
 {
+    [SerializeField]
     public Star[] stars;
 
     public void LoadFromDatabase(float magnitudeLimit)
