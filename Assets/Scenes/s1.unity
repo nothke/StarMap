@@ -210,8 +210,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1507327066}
-  - component: {fileID: 1507327065}
-  - component: {fileID: 1507327067}
   - component: {fileID: 1507327068}
   m_Layer: 0
   m_Name: GameObject (1)
@@ -220,68 +218,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1507327065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1507327064}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e66d362ac302e6c409c1ccb4bf7785f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starData: {fileID: 11400000, guid: 97382b912fcf831449b5f3dbbc8a7725, type: 2}
-  material: {fileID: 2100000, guid: 7f34dad3e25a6d946b47723a6c2862ce, type: 2}
-  offset: 100
-  cullBelowHorizon: 0
 --- !u!4 &1507327066
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507327064}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.3333253, w: 0.9428119}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1507327067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1507327064}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd28d13f311745548bca97e342676904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starData: {fileID: 11400000, guid: 97382b912fcf831449b5f3dbbc8a7725, type: 2}
-  material: {fileID: 2100000, guid: 1be02fb9de4d0fe428fc1e2926c76490, type: 2}
-  distance: 100
-  sizeByMagnitudeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 4
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 7
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  magnitudeAffectsAlpha: 0
-  cullBelowHorizon: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.941}
 --- !u!114 &1507327068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +264,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   magnitudeAffectsAlpha: 1
-  cullBelowHorizon: 0
+  cullBelowHorizon: 1
+  cullBelowHorizonOffset: 0.05
+  useCubicSplitting: 1
 --- !u!1 &1622128334
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,15 +6,26 @@ public class StarmapCubicSplitMeshRenderer : MonoBehaviour
     public StarData starData;
     public Material material;
 
+    [Tooltip("How far will the stars be rendered from the origin")]
     public float distance = 100;
+    [Tooltip("0 are brightest stars and falling off with magnitude")]
     public AnimationCurve sizeByMagnitudeCurve = new AnimationCurve(
         new Keyframe(0, 4f),
         new Keyframe(7, 1f));
+    [Tooltip("If true, magnitude will be saved into alpha, " +
+        "so dimmer stars will be more transparent if using a shader " +
+        "with vertex color such as a particle shader.")]
     public bool magnitudeAffectsAlpha = true;
+    [Tooltip("Stars below the horizon will not be spawned. " +
+        "If you intend to rotate the sky, like in case you have a time of day, " +
+        "you should disable this.")]
     public bool cullBelowHorizon = false;
-    public bool useCubicSplitting = true;
+    [Tooltip("Since the stars exactly on the horizon could be visible, we want to have a little bit of margin. Only relevant if cullBelowHorizon is true.")]
     [Range(0, 1)]
     public float cullBelowHorizonOffset = 0.05f;
+    [Tooltip("Cubic splitting will divide the stars into 6 separate meshes. This improves performance since only those sides that are visible are rendered (frustum culling). " +
+        "You will probably want to have this option always on.")]
+    public bool useCubicSplitting = true;
 
     void Start()
     {
@@ -75,9 +86,10 @@ public class StarmapCubicSplitMeshRenderer : MonoBehaviour
 
         for (int i = 0; i < stars.Length; i++)
         {
-            Vector3 pos = stars[i].position;
+            Vector3 pos = stars[i].position.normalized;
+
             if (cullBelowHorizon &&
-                transform.TransformDirection(pos).y > 0)
+                transform.TransformDirection(pos).y > -cullBelowHorizonOffset)
                 starsList.Add(stars[i]);
         }
 
