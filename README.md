@@ -1,7 +1,9 @@
 # StarMap
 Rendering of stars in the night sky using the HYG database http://astronexus.com/node/34
 
-![unity star map chart rendering](http://i.imgur.com/rEFGI4Sl.png)
+<p align="center">
+<img src="https://github.com/nothke/StarMap/blob/asset-based-creation/doc/starmap_cover.png" width="1000">
+</p>
 
 It uses a geometry shader (or optionally a baked billboard mesh) to render thousands of stars as billboard sprites at little cost. You can use it as a background in your space or sailing game or.. anything else.
 
