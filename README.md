@@ -26,18 +26,23 @@ First you need to build a StarData asset. This asset will hold the data about th
 
 ### 2: Chose your rendering method
 To render the stars, one of the rendering components needs to be added to the scene:
-* StarmapGSRenderer renders the stars with a geometry shader as billboards for each vertex. The benefit of a geometry shader is that it requires less memory, and it can be dinamically resized on the GPU. Although it might not be supported on some platforms. It has not been tested on SRP either.
-To use it, attach the Starmapis that the  Attach the StarGS material to it, and once you start the game you should see the stars. All the parameters are configured on the material inspectorlike size and magnitude can currently only be configured inside the GSBillboardFacing shader. 
-* StarmapMeshRenderer renders the stars as a mesh, with quads - permanently pointing towards the center. All parameters like magnitude and size can be setup within the component, and have tooltips (if you hover over parameters), which explain what each parameter does. It is recommended to use a Particle additive shader, although, you can use any custom shader that supports vertex color.
+#### StarmapGSRenderer
+The StarmapGSRenderer renders the stars with a geometry shader as billboards for each vertex. The benefit of a geometry shader is that it requires less memory, and it can be dinamically resized on the GPU. Although it might not be supported on some platforms. It has not been tested on SRP either.
+#### StarmapMeshRenderer 
+The StarmapMeshRenerer renders the stars as a non-dynamic mesh, with quads - permanently pointing towards the center. All parameters like magnitude and size can be setup within the component, and have tooltips (if you hover over parameters), which explain what each parameter does. It is recommended to use a Particle additive shader material, although, you can use any custom shader that supports vertex color.
 
-## Additional notes
-* The StarmapMeshRenderer has an ability to split the stars into 6 sides, 
+### 3: Now add your renderer to the scene
+1. Add your chosen renderer to a GameObject centered at 0,0,0.
+2. Add the StarData you made in step 1.
+3. Assign the material
+  * For StarmapGSRenderer, you need to use the material with one of the Geometry/Star shaders. It is recommended to use the 'Star - Screen Aware' shader as it will dynamically resize with the field of view.
+  * For StarmapMeshRenderer, you should use the particle additive shader, or a custom transparent additive shader that has a vertex color support
+4. The distance parameter is how far from the center the stars will be rendered at. Note that they will not be rendered if they are beyond the cameras far plane.
+5. Edit parameters
+  * For the StarmapGSRenderer, most parameters are in the material inspector.
+  * For StarmapMeshRenderer, parameters are in the inspector.
+6. When you start the game, the stars should now be generated!
 
 ## Notes
-The project is still WIP, not many things are exposed (you need to dig in the code to change stuff), and it's currently hardcoded to only accept hygdata_v3.csv. 
-
-Here is a few things I am working on for future updates:
-* Exposed variables
-* Billboard resize according to camera's field of view
-* Realistic exposure-relative brightness
-* Star colors
+The project is currently hardcoded to only accept hygdata_v3.csv, but see the Starmap class to plug your own custom data.
+To make the stars always be visible 'in infinity' a good solution is to make a script that will make the transform of the starmap follow the camera all the time.
