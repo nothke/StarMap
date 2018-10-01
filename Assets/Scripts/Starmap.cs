@@ -15,13 +15,7 @@ public class Starmap : MonoBehaviour
 
     const string DATABASE_FILENAME = "hygdata_v3.csv";
 
-    public struct Star
-    {
-        public string name;
-        public Vector3 position;
-        public float magnitude;
-        public float colorIndex;
-    }
+
 
     Star[] stars;
 
@@ -80,6 +74,52 @@ public class Starmap : MonoBehaviour
             GenerateStarsAsGeometryMesh();
         else
             GenerateStarsAsStaticQuadsMesh();
+    }
+
+    public static Star[] LoadFromDatabase(float magnitudeLimit)
+    {
+        List<string> pickedLines = new List<string>();
+
+        string[] lines = File.ReadAllLines(DATABASE_FILENAME);
+
+        // Look for stars that are below magnitude
+        for (int i = 2; i < lines.Length; i++) // start from 2 to skip caption line and Sun
+        {
+            var magStr = lines[i].Split(',')[13];
+
+            float mag = float.Parse(magStr);
+            if (i == 50) Debug.Log(mag);
+
+            if (mag < magnitudeLimit)
+                pickedLines.Add(lines[i]);
+        }
+
+        Debug.Log("Found " + pickedLines.Count + " stars");
+
+        int starNum = pickedLines.Count;
+
+        Star[] stars = new Star[starNum];
+
+        for (int i = 0; i < starNum; i++)
+        {
+            var split = pickedLines[i].Split(',');
+
+            Star star = new Star();
+            star.magnitude = float.Parse(split[13]);
+            float x = float.Parse(split[17]);
+            float y = float.Parse(split[18]);
+            float z = float.Parse(split[19]);
+
+            star.position = new Vector3(x, z, y);
+
+            float ci = 2800;
+            float.TryParse(split[16], out ci);
+            star.colorIndex = ci;
+
+            stars[i] = star;
+        }
+
+        return stars;
     }
 
     void GenerateStarsAsPrefabs(GameObject prefab)
