@@ -3,16 +3,16 @@ Rendering of stars in the night sky using the HYG database http://astronexus.com
 
 ![unity star map chart rendering](http://i.imgur.com/rEFGI4Sl.png)
 
-It uses a geometry shader, or a baked billboard mesh to render thousands of stars as billboard sprites at little cost. You can use it as a background in your space or sailing game or.. anything else.
+It uses a geometry shader (or optionally a baked billboard mesh) to render thousands of stars as billboard sprites at little cost. You can use it as a background in your space or sailing game or.. anything else.
 
 ## Features
-* Automatically creates a renderes on loading the scene, so the star data can be very small.
-* If using geometry shader rendering, stars will be resized according to the camera's field of view, so when zooming in you will not see a white blob across your entire screen.
-* Zooming in also does not result in seeing awful compression artifacts or pixels (as would if you were using a skybox)
-* Realistic star colors depending on the star's temperature
+* Automatically creates renderers on loading the scene, so the star data can be very small.
+* Star's size is based on magnitude and can be limited according to the camera's field of view. When zooming in you will not see a white blob across your entire screen, nor will the stars completely disappear if the fov is too high. This only works if using geometry shader rendering.
+* Zooming in also does not result in seeing awful compression artifacts or pixels, as would if you were using a skybox.
+* Realistic star colors depending on the star's temperature.
 * Since geometry shaders are not supported on all platforms, a static billboard mesh renderer is provided too.
-* Mesh rendering method has an option for cubic splitting, which divides the stars into 6 separate meshes. This improves performance since only those sides that are visible are rendered (frustum culling).
-* Option to cull all stars below the horizon, if you are making a night game on ground, without dynamic time of day.
+* Mesh rendering method has an option for cubic splitting, which divides the star field into 6 separate meshes. This improves performance since only those sides that are visible are rendered (frustum culling).
+* Option to cull all stars below the horizon, for example if you are making a night game on ground, without dynamic time of day.
 
 ## Requirements
 You need to download hygdata_v3.csv from https://github.com/astronexus/HYG-Database, and put it in the Project folder.
