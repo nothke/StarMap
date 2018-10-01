@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using StarMap;
+
 public class ColorFromTempTest : MonoBehaviour
 {
     [Range(0, 15000)]

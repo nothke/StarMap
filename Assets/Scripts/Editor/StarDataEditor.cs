@@ -3,32 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(StarData))]
-public class StarDataEditor : Editor
+namespace StarMap
 {
-    public float magnitudeLimit = 7;
-
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(StarData))]
+    public class StarDataEditor : Editor
     {
-        StarData data = target as StarData;
+        public float magnitudeLimit = 7;
 
-        magnitudeLimit = EditorGUILayout.FloatField("Magnitude Limit", magnitudeLimit);
-
-        if (GUILayout.Button("Generate Data"))
+        public override void OnInspectorGUI()
         {
-            data.LoadFromDatabase(magnitudeLimit);
-        }
+            StarData data = target as StarData;
 
-        if (data.stars == null)
-        {
-            GUILayout.Label("No stars");
-        }
-        else
-        {
-            string count = data.stars.Length.ToString();
-            EditorGUILayout.LabelField("Stars loaded: " + count);
+            magnitudeLimit = EditorGUILayout.FloatField("Magnitude Limit", magnitudeLimit);
 
-            EditorUtility.SetDirty(data);
+            if (GUILayout.Button("Generate Data"))
+            {
+                data.LoadFromDatabase(magnitudeLimit);
+            }
+
+            if (data.stars == null)
+            {
+                GUILayout.Label("No stars");
+            }
+            else
+            {
+                string count = data.stars.Length.ToString();
+                EditorGUILayout.LabelField("Stars loaded: " + count);
+
+                EditorUtility.SetDirty(data);
+            }
         }
     }
 }
