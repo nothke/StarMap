@@ -13,6 +13,7 @@ It uses a geometry shader (or optionally a baked billboard mesh) to render thous
 * Since geometry shaders are not supported on all platforms, a static billboard mesh renderer is provided too.
 * Mesh rendering method has an option for cubic splitting, which divides the star field into 6 separate meshes. This improves performance since only those sides that are visible are rendered (frustum culling).
 * Option to cull all stars below the horizon, for example if you are making a night game on ground, without dynamic time of day.
+* Example scene provided
 
 ## Requirements
 You need to download hygdata_v3.csv from https://github.com/astronexus/HYG-Database, and put it in the Project folder.
