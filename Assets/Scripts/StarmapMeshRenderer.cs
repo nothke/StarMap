@@ -41,39 +41,23 @@ namespace StarMap
 
             Star[] stars = starData.stars;
 
-            // WET: This is to skip making a list
-            if (!cullBelowHorizon && !useCubicSplitting)
-            {
-                Mesh m = GenerateStarsAsStaticQuadsMesh(stars);
-                gameObject.AddComponent<MeshFilter>().sharedMesh = m;
-                gameObject.AddComponent<MeshRenderer>().material = material;
-                return;
-            }
-
-            List<Star> starsList;
-
-            if (cullBelowHorizon)
-                starsList = CullBelowHorizon();
-            else
+            List<Star> starsList = cullBelowHorizon ?
+                starsList = Starmap.GetStarsCulledBelowHorizon(stars, transform.InverseTransformDirection(Vector3.up), cullBelowHorizonOffset) :
                 starsList = new List<Star>(stars);
+
+            const int MESH_STAR_COUNT_LIMIT = 65534 / 4;
 
             if (useCubicSplitting)
             {
                 var cubicSplitStars = CubicSplit(starsList);
 
-                const int maxStarCount = 65534 / 4;
-
                 foreach (var cs in cubicSplitStars)
                 {
-                    if (cs.Count == 0) continue;
+                    var splits = Starmap.SplitToMax(cs, MESH_STAR_COUNT_LIMIT);
 
-                    for (int si = 0; si < cs.Count; si += maxStarCount)
+                    foreach (var chunk in splits)
                     {
-                        int sct = cs.Count - si;
-                        if (sct > maxStarCount) sct = maxStarCount;
-                        var starsForMesh = cs.GetRange(si, sct).ToArray();
-
-                        Mesh m = GenerateStarsAsStaticQuadsMesh(starsForMesh);
+                        Mesh m = GenerateStarsAsStaticQuadsMesh(chunk);
 
                         GameObject go = new GameObject("Stars");
                         go.AddComponent<MeshFilter>().sharedMesh = m;
@@ -84,27 +68,18 @@ namespace StarMap
             }
             else
             {
-                Mesh m = GenerateStarsAsStaticQuadsMesh(starsList.ToArray());
-                gameObject.AddComponent<MeshFilter>().sharedMesh = m;
-                gameObject.AddComponent<MeshRenderer>().material = material;
+                var splits = Starmap.SplitToMax(starsList, MESH_STAR_COUNT_LIMIT);
+
+                foreach (var chunk in splits)
+                {
+                    Mesh m = GenerateStarsAsStaticQuadsMesh(chunk);
+
+                    GameObject go = new GameObject("Stars");
+                    go.AddComponent<MeshFilter>().sharedMesh = m;
+                    go.AddComponent<MeshRenderer>().material = material;
+                    go.transform.SetParent(gameObject.transform, false);
+                }
             }
-        }
-
-        List<Star> CullBelowHorizon()
-        {
-            Star[] stars = starData.stars;
-            List<Star> starsList = new List<Star>();
-
-            for (int i = 0; i < stars.Length; i++)
-            {
-                Vector3 pos = stars[i].position.normalized;
-
-                if (cullBelowHorizon &&
-                    transform.TransformDirection(pos).y > -cullBelowHorizonOffset)
-                    starsList.Add(stars[i]);
-            }
-
-            return starsList;
         }
 
         List<Star>[] CubicSplit(List<Star> stars)

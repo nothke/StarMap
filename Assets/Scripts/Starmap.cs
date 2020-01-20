@@ -137,5 +137,34 @@ namespace StarMap
             return new Color(r / 255, g / 255, b / 255);
         }
 
+        public static List<Star[]> SplitToMax(List<Star> input, int maxCount)
+        {
+            var stars = new List<Star[]>();
+
+            for (int si = 0; si < input.Count; si += maxCount)
+            {
+                int sct = input.Count - si;
+                if (sct > maxCount) sct = maxCount;
+                stars.Add(input.GetRange(si, sct).ToArray());
+            }
+
+            return stars;
+        }
+
+        public static List<Star> GetStarsCulledBelowHorizon(Star[] stars, Vector3 zenithDirection, float cullBelowHorizonOffset = 0)
+        {
+            List<Star> starsList = new List<Star>();
+
+            for (int i = 0; i < stars.Length; i++)
+            {
+                Vector3 pos = stars[i].position.normalized;
+
+                float dot = Vector3.Dot(pos, zenithDirection);
+                if (dot > -cullBelowHorizonOffset)
+                    starsList.Add(stars[i]);
+            }
+
+            return starsList;
+        }
     }
 }
