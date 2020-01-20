@@ -59,18 +59,27 @@ namespace StarMap
 
             if (useCubicSplitting)
             {
-                var cubicSplitStars = CubicSplit2(starsList);
+                var cubicSplitStars = CubicSplit(starsList);
+
+                const int maxStarCount = 65534 / 4;
 
                 foreach (var cs in cubicSplitStars)
                 {
                     if (cs.Count == 0) continue;
 
-                    Mesh m = GenerateStarsAsStaticQuadsMesh(cs.ToArray());
+                    for (int si = 0; si < cs.Count; si += maxStarCount)
+                    {
+                        int sct = cs.Count - si;
+                        if (sct > maxStarCount) sct = maxStarCount;
+                        var starsForMesh = cs.GetRange(si, sct).ToArray();
 
-                    GameObject go = new GameObject("Stars");
-                    go.AddComponent<MeshFilter>().sharedMesh = m;
-                    go.AddComponent<MeshRenderer>().material = material;
-                    go.transform.SetParent(gameObject.transform, false);
+                        Mesh m = GenerateStarsAsStaticQuadsMesh(starsForMesh);
+
+                        GameObject go = new GameObject("Stars");
+                        go.AddComponent<MeshFilter>().sharedMesh = m;
+                        go.AddComponent<MeshRenderer>().material = material;
+                        go.transform.SetParent(gameObject.transform, false);
+                    }
                 }
             }
             else
