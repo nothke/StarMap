@@ -45,7 +45,6 @@ namespace StarMap
                 starsList = Starmap.GetStarsCulledBelowHorizon(stars, transform.InverseTransformDirection(Vector3.up), cullBelowHorizonOffset) :
                 starsList = new List<Star>(stars);
 
-            const int MESH_STAR_COUNT_LIMIT = 65534 / 4;
 
             if (useCubicSplitting)
             {
@@ -53,7 +52,7 @@ namespace StarMap
 
                 foreach (var cs in cubicSplitStars)
                 {
-                    var splits = Starmap.SplitToMax(cs, MESH_STAR_COUNT_LIMIT);
+                    var splits = Starmap.SplitToMax(cs, Starmap.MESH_STAR_COUNT_LIMIT);
 
                     foreach (var chunk in splits)
                     {
@@ -68,7 +67,7 @@ namespace StarMap
             }
             else
             {
-                var splits = Starmap.SplitToMax(starsList, MESH_STAR_COUNT_LIMIT);
+                var splits = Starmap.SplitToMax(starsList, Starmap.MESH_STAR_COUNT_LIMIT);
 
                 foreach (var chunk in splits)
                 {

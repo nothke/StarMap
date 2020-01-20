@@ -9,6 +9,7 @@ namespace StarMap
     public static class Starmap
     {
         const string DATABASE_FILENAME = "hygdata_v3.csv";
+        public const int MESH_STAR_COUNT_LIMIT = 65534 / 4;
 
         public static Star[] LoadFromDatabase(float magnitudeLimit)
         {

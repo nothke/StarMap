@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace StarMap
 {
@@ -10,8 +11,6 @@ namespace StarMap
         public float distance = 100;
         public bool cullBelowHorizon = false;
 
-        Star[] stars;
-
         void Start()
         {
             if (!starData)
@@ -22,15 +21,23 @@ namespace StarMap
                 return;
             }
 
-            stars = starData.stars;
+            var stars = new List<Star>(starData.stars);
 
-            Mesh m = GenerateStarsAsGeometryMesh();
+            var splits = Starmap.SplitToMax(stars, Starmap.MESH_STAR_COUNT_LIMIT);
 
-            gameObject.AddComponent<MeshFilter>().sharedMesh = m;
-            gameObject.AddComponent<MeshRenderer>().material = material;
+            foreach (var chunk in splits)
+            {
+                Mesh m = GenerateStarsAsGeometryMesh(chunk);
+
+                GameObject go = new GameObject("Stars");
+                go.AddComponent<MeshFilter>().sharedMesh = m;
+                go.AddComponent<MeshRenderer>().material = material;
+                go.transform.SetParent(gameObject.transform, false);
+            }
+
         }
 
-        Mesh GenerateStarsAsGeometryMesh()
+        Mesh GenerateStarsAsGeometryMesh(Star[] stars)
         {
             Mesh m = new Mesh();
 
