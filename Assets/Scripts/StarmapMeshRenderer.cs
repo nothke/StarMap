@@ -105,47 +105,6 @@ namespace StarMap
             for (int i = 0; i < cs.Length; i++)
                 cs[i] = new List<Star>();
 
-            float t = 1 / Mathf.Sqrt(2);
-
-            for (int i = 0; i < stars.Count; i++)
-            {
-                Vector3 pos = stars[i].position.normalized;
-
-                if (pos.x > -t && pos.x < t &&
-                    pos.y > -t && pos.y < t) // front or back
-                {
-                    if (pos.z > 0) // front
-                        cs[0].Add(stars[i]);
-                    else // back
-                        cs[1].Add(stars[i]);
-                }
-                else if (pos.x > -t && pos.x < t &&
-                        pos.z > -t && pos.z < t) // top or bottom
-                {
-                    if (pos.y > 0) // top
-                        cs[2].Add(stars[i]);
-                    else // bottom
-                        cs[3].Add(stars[i]);
-                }
-                else // right or left
-                {
-                    if (pos.x > 0) // right
-                        cs[4].Add(stars[i]);
-                    else // left
-                        cs[5].Add(stars[i]);
-                }
-            }
-
-            return cs;
-        }
-
-        List<Star>[] CubicSplit2(List<Star> stars)
-        {
-            List<Star>[] cs = new List<Star>[6];
-
-            for (int i = 0; i < cs.Length; i++)
-                cs[i] = new List<Star>();
-
             for (int i = 0; i < stars.Count; i++)
             {
                 int index = GetCubeMapIndex(stars[i].position);
